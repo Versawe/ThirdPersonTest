@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovementThirdPerson : MonoBehaviour
 {
     private CharacterController cc;
 
-    private float playerSpeed = 5;
+    private float playerSpeed = 6.5f;
+
+    private bool jumpOnce = false;
+
+    Vector3 inputDir;
+
+    private float jumpSpeed = 8.5f;
+    private float gravity = 20f;
+    private Vector3 moveDirection = Vector3.zero;
 
     public Transform cam;
     // Start is called before the first frame update
@@ -18,8 +26,8 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         MovePlayer();
+        JumpPlayer();
     }
 
     private void MovePlayer()
@@ -28,9 +36,10 @@ public class CharacterMovement : MonoBehaviour
 
         float h = Input.GetAxisRaw("Horizontal");
 
-        Vector3 inputDir = transform.forward * v + transform.right * h;
+        inputDir = transform.forward * v + transform.right * h;
 
         cc.SimpleMove(inputDir * playerSpeed);
+
 
         if (h != 0 || v != 0)
         {
@@ -40,5 +49,17 @@ public class CharacterMovement : MonoBehaviour
 
             transform.rotation = Quaternion.Lerp(transform.rotation, camRot, 0.1f);
         }
+    }
+
+    private void JumpPlayer()
+    {
+        if (!jumpOnce && Input.GetButton("Jump"))
+        {
+            moveDirection.y = jumpSpeed;
+            jumpOnce = true;
+        }
+        moveDirection.y -= gravity * Time.deltaTime;
+        cc.Move(moveDirection * Time.deltaTime);
+        if (cc.isGrounded) jumpOnce = false;
     }
 }
