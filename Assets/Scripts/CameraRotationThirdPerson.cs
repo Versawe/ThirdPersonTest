@@ -19,13 +19,14 @@ public class CameraRotationThirdPerson : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // gets main camera
         cam = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //has rig set to focus on character
         transform.position = target.position;
 
         RotateCamera();
@@ -33,14 +34,19 @@ public class CameraRotationThirdPerson : MonoBehaviour
 
     private void RotateCamera()
     {
+        //saves axis movement of x and y mouse movement
         float mx = Input.GetAxis("Mouse X");
         float my = Input.GetAxis("Mouse Y");
 
+        // yaw and pitch values change determined on 
+        // mousex and mousey movement and applied sensitivity to both
         yaw += mx * yawSensitivity;
         pitch -= my * pitchSensitivity;
 
+        //clamp pitch, so camera doesn't rotate too far low or high to seem weird
         float pitch_clamped = Mathf.Clamp(pitch, -45f, 45f);
 
+        // use the clamped pitch and yaw to rotate camera rig, entered in as euler angles through Quaternion class 
         transform.rotation = Quaternion.Euler(pitch_clamped, yaw, 0);
     }
 }
