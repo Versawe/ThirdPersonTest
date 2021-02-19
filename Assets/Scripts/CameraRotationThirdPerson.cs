@@ -21,6 +21,7 @@ public class CameraRotationThirdPerson : MonoBehaviour
     {
         // gets main camera
         cam = Camera.main;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame

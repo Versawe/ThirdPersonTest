@@ -32,6 +32,8 @@ public class CameraRotationFirstPerson : MonoBehaviour
         player = GameObject.Find("Player");
 
         an = player.GetComponentInChildren<Animator>();
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
