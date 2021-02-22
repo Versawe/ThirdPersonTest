@@ -12,13 +12,12 @@ public class CharacterMovementThirdPerson : MonoBehaviour
     Vector3 inputDir;
     Vector3 copyInputVec;
     private bool isMoving = false;
-    private float skidDelay = 0.15f;
-    private float skidLength = 0.75f;
 
-    private float jumpSpeed = 8.5f;
-    private float gravity = 20f;
+    private float jumpSpeed = 9f;
+    private float gravityWeight = 0f;
+    Vector3 gravityDirection;
+
     private Vector3 moveDirection = Vector3.zero;
-    private bool jumpOnce = false;
 
     private float pushPower = 2f;
 
@@ -41,6 +40,11 @@ public class CharacterMovementThirdPerson : MonoBehaviour
     {
         MovePlayer();
         JumpPlayer();
+
+
+        Vector3 allMovementVectors = inputDir * playerSpeed + gravityDirection * gravityWeight + moveDirection;
+
+        cc.Move(allMovementVectors * Time.deltaTime);
     }
 
     //movement for player
@@ -118,53 +122,33 @@ public class CharacterMovementThirdPerson : MonoBehaviour
             an.SetBool("IsIdle", idle);
         }
 
-        //skidding functionality
-        if (isMoving)
-        {
-            if (h != 0 || v != 0)
-            {
-                copyInputVec = inputDir;
-            }
-            else
-            {
-                inputDir = Vector3.Lerp(copyInputVec, new Vector3(0, 0, 0), skidLength);
-                skidDelay -= Time.deltaTime;
-                if (skidDelay <= 0) isMoving = false;
-            }
-        }
-        if (!isMoving)
-        {
-            skidDelay = 0.15f;
-        }
-
-        //applies input vector to apply to char controller
-        cc.SimpleMove(inputDir * playerSpeed);
-
         //this statement rotates the character to be facing away from camera if movement is applied
         if (h != 0 || v != 0)
         {
 
             Quaternion camRot = Quaternion.Euler(0, cam.eulerAngles.y, 0);
-            transform.rotation = Quaternion.Lerp(transform.rotation, camRot, 0.1f);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, camRot, 0.1f);
+            transform.rotation = Mymath.Slide(transform.rotation, camRot, 0.001f);
             isMoving = true;
         }
     }
 
-    //player jump ability
     private void JumpPlayer()
     {
+        //gravity appylied
+        gravityDirection = Vector3.down;
+
+        if (!cc.isGrounded)
+        {
+            gravityWeight += 25f * Time.deltaTime;
+        }
+
         //checks if spacebar clicked and only triggable once
-        if (!jumpOnce && Input.GetButton("Jump"))
+        if (cc.isGrounded && Input.GetButtonDown("Jump"))
         {
             moveDirection.y = jumpSpeed;
-            jumpOnce = true;
+            gravityWeight = 0;
         }
-        //applies gravity and move ability for char controller
-        moveDirection.y -= gravity * Time.deltaTime;
-        cc.Move(moveDirection * Time.deltaTime);
-
-        //if on ground locks jumponce to be sure to allow character to jump again
-        if (cc.isGrounded) jumpOnce = false;
     }
 
     //pushes block

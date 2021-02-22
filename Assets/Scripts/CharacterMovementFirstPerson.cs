@@ -58,15 +58,6 @@ public class CharacterMovementFirstPerson : MonoBehaviour
         // Example: w = 1, s = -1, a = -1, d = 1
 
         inputDir = transform.forward * v + transform.right * h;
-        /*if (cc.isGrounded)
-        {
-            inputDir = transform.forward * v + transform.right * h;
-            copyInputVec = inputDir;
-        }
-        else
-        {
-            inputDir = Vector3.Lerp(copyInputVec, Vector3.zero, 0.25f);
-        }*/
 
         //Animation Triggers below, should come up with a function to shorten the length of each statement in the FUTURE
         //animations for running, forward, left and right
