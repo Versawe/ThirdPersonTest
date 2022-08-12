@@ -33,6 +33,7 @@ public class CharacterMovementFirstPerson : MonoBehaviour
         cc = GetComponent<CharacterController>();
         an = GetComponentInChildren<Animator>();
 
+        Physics.IgnoreLayerCollision(9, 10);
     }
 
     // Update is called once per frame
