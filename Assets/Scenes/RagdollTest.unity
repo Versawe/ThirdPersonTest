@@ -529,6 +529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1455407360}
   - component: {fileID: 1455407361}
+  - component: {fileID: 1455407362}
   m_Layer: 10
   m_Name: SwordPivot
   m_TagString: Weapon
@@ -566,6 +567,19 @@ MonoBehaviour:
   swordState: Follow
   cam: {fileID: 1098963607}
   swordLocPos: {fileID: 1963477848}
+--- !u!114 &1455407362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455407359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40005dc894d42d540b6350f5e00e8bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swordPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1524782426
 GameObject:
   m_ObjectHideFlags: 0

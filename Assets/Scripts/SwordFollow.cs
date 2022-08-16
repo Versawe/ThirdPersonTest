@@ -14,13 +14,12 @@ public class SwordFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = swordLocPos.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (swordState == "Follow") SwordLocked();   
+        if (swordState == "Follow") SwordLocked();
     }
 
     private void SwordLocked()
