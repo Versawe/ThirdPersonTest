@@ -14,19 +14,15 @@ public class AttackSword : MonoBehaviour
     Vector3 point2;
     Vector3 point3;
 
-    SwordFollow follow;
-
     // Start is called before the first frame update
     void Start()
     {
-        swordPosition = transform.position;
         startPosition = transform.localPosition;
+        swordPosition = transform.localPosition;
 
-        follow = GetComponent<SwordFollow>();
-
-        point1 = new Vector3(startPosition.x+0.5f, startPosition.y, startPosition.z);
-        point2 = new Vector3(startPosition.x, startPosition.y+0.5f, startPosition.z+0.15f);
-        point3 = new Vector3(startPosition.x - 0.75f, startPosition.y, startPosition.z+0.17f);
+        point1 = new Vector3(startPosition.x+0.05f, startPosition.y, startPosition.z);
+        point2 = new Vector3(startPosition.x, startPosition.y+0.25f, startPosition.z+0.05f);
+        point3 = new Vector3(startPosition.x - 0.15f, startPosition.y, startPosition.z);
     }
 
     // Update is called once per frame
@@ -37,7 +33,7 @@ public class AttackSword : MonoBehaviour
             AttackOne();
         }
 
-        transform.localPosition = follow.swordLocPos.position + swordPosition;
+        transform.localPosition = swordPosition;
     }
 
     private void AttackOne()
@@ -52,6 +48,6 @@ public class AttackSword : MonoBehaviour
             swordPosition = startPosition;
             swingLocations1 = 0;            
         }
-        print(swingLocations1);
+        //print(swingLocations1);
     }
 }

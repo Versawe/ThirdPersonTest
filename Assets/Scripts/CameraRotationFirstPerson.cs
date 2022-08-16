@@ -29,7 +29,7 @@ public class CameraRotationFirstPerson : MonoBehaviour
         // gets main camera
         cam = Camera.main;
 
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
 
         an = player.GetComponentInChildren<Animator>();
 
